@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Titanic Passenger Details</title>
+    <title>Film Industry Analysis</title>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -11,51 +11,103 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h2>Titanic Passenger Details</h2>
+      <h2>Movie Success Prediction</h2>
       <form id="passengerForm">
         <div class="form-group">
-          <label for="passengerClass">Passenger Class</label>
+          <label for="budget">Budget</label>
+          <input
+            type="text"
+            class="form-control"
+            id="budget"
+            name="budget"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="release_year">Release year</label>
+          <input
+            type="text"
+            class="form-control"
+            id="release_year"
+            name="release_year"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="release_month">Release month</label>
+          <input
+            type="text"
+            class="form-control"
+            id="release_month"
+            name="release_month"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="runtime">Runtime</label>
+          <input
+            type="text"
+            class="form-control"
+            id="runtime"
+            name="runtime"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="passengerClass">Certificates</label>
           <select
             class="form-control"
-            id="passengerClass"
-            name="passengerClass"
+            id="certificate"
+            name="certificate"
           >
-            <option value="1">1st</option>
-            <option value="2">2nd</option>
-            <option value="3">3rd</option>
+          {% for certificate in certificates %}
+            <option value="{{certificate}}">{{certificate}}</option>
+          {% endfor %}
           </select>
         </div>
+
         <div class="form-group">
-          <label for="age">Age</label>
-          <input type="number" class="form-control" id="age" name="age" />
-        </div>
-        <div class="form-group">
-          <label for="embarked">Embarked</label>
-          <select class="form-control" id="embarked" name="embarked">
-            <option value="C">Cherbourg</option>
-            <option value="Q">Queenstown</option>
-            <option value="S">Southampton</option>
+          <label for="stars">Stars</label>
+          <select
+            class="form-control"
+            id="stars"
+            name="stars[]"
+            multiple
+          >
+          {% for star in stars %}
+            <option value="{{star}}">{{star}}</option>
+          {% endfor %}
           </select>
         </div>
+
         <div class="form-group">
-          <label for="fare">Fare</label>
-          <input type="number" class="form-control" id="fare" name="fare" />
-        </div>
-        <div class="form-group">
-          <label for="sibsp">Number of Siblings/Spouses</label>
-          <input type="number" class="form-control" id="sibsp" name="sibsp" />
-        </div>
-        <div class="form-group">
-          <label for="parch">Number of Parents/Children</label>
-          <input type="number" class="form-control" id="parch" name="parch" />
-        </div>
-        <div class="form-group">
-          <label for="sex">Sex</label>
-          <select class="form-control" id="sex" name="sex">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+          <label for="directors">Directors</label>
+          <select
+            class="form-control"
+            id="directors"
+            name="directors[]"
+            multiple
+          >
+          {% for director in directors %}
+            <option value="{{director}}">{{director}}</option>
+          {% endfor %}
           </select>
         </div>
+
+        <div class="form-group">
+          <label for="directors">Genres</label>
+          <select
+            class="form-control"
+            id="genres"
+            name="genres[]"
+            multiple
+          >
+          {% for genre_column in genre_columns %}
+            <option value="{{genre_column}}">{{genre_column}}</option>
+          {% endfor %}
+          </select>
+        </div>
+
         <button type="button" class="btn btn-primary" id="submitBtn">
           Submit
         </button>
@@ -70,13 +122,14 @@
         $('#submitBtn').click(function () {
           event.preventDefault();
           var passengerData = {
-            passengerClass: $('#passengerClass').val(),
-            age: $('#age').val(),
-            embarked: $('#embarked').val(),
-            fare: $('#fare').val(),
-            sibsp: $('#sibsp').val(),
-            parch: $('#parch').val(),
-            sex: $('#sex').val(),
+            budget: $('#budget').val(),
+            release_year: $('#release_year').val(),
+            release_month: $('#release_month').val(),
+            runtime: $('#runtime').val(),
+            certificate: $('#certificate').val(),
+            stars: $('#stars').val(),
+            directors: $('#directors').val(),
+            genres: $('#genres').val(),
           };
 
           $.ajax({
